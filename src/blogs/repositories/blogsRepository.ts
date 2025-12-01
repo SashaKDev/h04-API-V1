@@ -5,8 +5,22 @@ import {blogsCollection} from "../../db/mongo.db";
 
 
 export const blogsRepository = {
-    async findAll(): Promise<WithId<Blog>[]>{
-        return  await blogsCollection.find().toArray();
+    async findAll(skip: number, limit: number, sortBy: string, sortDirection: string, searchNameTerm: string): Promise<{items: WithId<Blog>[], totalCount: number}>{
+        const sortDirectionNumber = sortDirection === 'desc' ? -1 : 1;
+        let filter = {};
+        if (searchNameTerm) {
+            filter = { name: { $regex: searchNameTerm, $options: "i" } }
+        }
+        return  {
+            items:
+                await blogsCollection
+                .find(filter)
+                .sort({ [sortBy]: sortDirectionNumber })
+                .skip(skip)
+                .limit(limit)
+                .toArray(),
+            totalCount: await blogsCollection.countDocuments()
+        }
     },
 
     async findById(id: string): Promise<WithId<Blog> | null>{
@@ -40,5 +54,5 @@ export const blogsRepository = {
         if (deleteResult.deletedCount === 0) {
             throw new Error("No blogs found.");
         }
-    }
+    },
 }

@@ -2,11 +2,20 @@ import {blogsRepository} from "../repositories/blogsRepository";
 import {Blog} from "../types/blog";
 import {WithId} from "mongodb";
 import {BlogInputDto} from "../dto/blog-input.dto";
+import {BlogWithPaginator} from "../types/blogWithPaginator";
 
 
 export const blogsService = {
-    async findAll(): Promise<WithId<Blog>[]> {
-        return await blogsRepository.findAll();
+    async findAll(pageNumber: number, pageSize: number, sortBy: string, sortDirection: string, searchNameTerm: string): Promise<BlogWithPaginator> {
+        const skip = (pageNumber - 1) * pageSize;
+        const limit = pageSize
+        const foundBlogs = await blogsRepository.findAll(skip, limit, sortBy, sortDirection, searchNameTerm);
+        return {
+            ...foundBlogs,
+            pageSize: pageSize,
+            page: pageNumber,
+            pagesCount: Math.ceil(foundBlogs.totalCount / pageSize)
+        }
     },
 
     async findById(id: string): Promise<WithId<Blog> | null> {
