@@ -1,5 +1,4 @@
 import {query} from 'express-validator';
-import express from "express";
 
 const DEFAULT_PAGE_NUMBER = 1;
 const DEFAULT_PAGE_SIZE = 10;

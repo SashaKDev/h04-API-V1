@@ -1,6 +1,4 @@
 import {Request, Response} from 'express';
-import {Blog} from "../../types/blog";
-import {blogsRepository} from "../../repositories/blogsRepository";
 import {mapBlogToViewModel} from "../../mapers/mapBlogToViewModel";
 import {BlogInputDto} from "../../dto/blog-input.dto";
 import {blogsService} from "../../application/blogsService";

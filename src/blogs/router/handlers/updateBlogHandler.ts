@@ -1,5 +1,4 @@
 import {Request, Response} from "express";
-import {blogsRepository} from "../../repositories/blogsRepository";
 import {BlogInputDto} from "../../dto/blog-input.dto";
 import {blogsService} from "../../application/blogsService";
 
