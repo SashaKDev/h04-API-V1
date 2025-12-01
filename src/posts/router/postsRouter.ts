@@ -8,10 +8,16 @@ import {getPostHandler} from "./handlers/getPostHandler";
 import {createPostHandler} from "./handlers/createPostHandler";
 import {updatePostHandler} from "./handlers/updatePostHandler";
 import {deletePostHandler} from "./handlers/deletePostHandler";
+import {
+    paginationAndSortingInputValidation
+} from "../../core/middlewares/validation/paginatoinAndSortingInputValidation";
 
 export const postsRouter = Router({});
 
-postsRouter.get('/', getAllPostsHandler);
+postsRouter.get('/',
+    paginationAndSortingInputValidation,
+    inputValidationResult,
+    getAllPostsHandler);
 
 postsRouter.get('/:id', getPostHandler);
 
