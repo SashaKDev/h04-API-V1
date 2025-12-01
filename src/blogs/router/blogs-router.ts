@@ -11,18 +11,30 @@ import {getAllBlogsHandler} from "./handlers/getAllBlogsHandler";
 import {
     paginationAndSortingInputValidation
 } from "../../core/middlewares/validation/paginatoinAndSortingInputValidation";
+import {getBlogPostsHandler} from "./handlers/getBlogPostsHandler";
+import {createPostForBlogHandler} from "./handlers/createPostForBlogHandler";
+import {postInputDtoValidation} from "../../posts/validation/postInputDtoValidation";
 
 export const blogsRouter = Router({});
 
 blogsRouter.get('/',
-    getAllBlogsHandler,
     paginationAndSortingInputValidation,
-    inputValidationResult);
+    inputValidationResult,
+    getAllBlogsHandler
+);
 
 blogsRouter.get('/:id',
     idValidation,
     inputValidationResult,
-    getBlogHandler);
+    getBlogHandler
+);
+
+blogsRouter.get('/:id/posts',
+    idValidation,
+    paginationAndSortingInputValidation,
+    inputValidationResult,
+    getBlogPostsHandler
+);
 
 blogsRouter.post('/',
     basicAuthMiddleware,
@@ -30,6 +42,14 @@ blogsRouter.post('/',
     inputValidationResult,
     createBlogHandler
 );
+blogsRouter.post('/:id/posts',
+    basicAuthMiddleware,
+    idValidation,
+    postInputDtoValidation,
+    inputValidationResult,
+    createPostForBlogHandler
+);
+
 
 blogsRouter.put('/:id',
     basicAuthMiddleware,
