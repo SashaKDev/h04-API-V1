@@ -1,10 +1,10 @@
 import {Request, Response} from 'express';
-import {postsRepository} from "../../repositories/postsRepository";
 import {PostInputDto} from "../../dto/post-input.dto";
+import {postsService} from "../../application/postsService";
 
 export const updatePostHandler = async (req: Request, res: Response) => {
 
-    const post = await postsRepository.findById(req.params.id);
+    const post = await postsService.findById(req.params.id);
     if (!post) {
         res.sendStatus(404);
         return;
@@ -17,7 +17,7 @@ export const updatePostHandler = async (req: Request, res: Response) => {
         blogId:	req.body.blogId,
     }
     try {
-        await postsRepository.update(req.params.id, dto);
+        await postsService.update(req.params.id, dto);
     } catch (err) {
         res.sendStatus(500);
         return;
