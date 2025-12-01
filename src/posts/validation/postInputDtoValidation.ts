@@ -22,6 +22,7 @@ const contentValidation = body('content')
     .withMessage('Wrong content length');
 
 const blogIdValidation = body('blogId')
+    .optional()
     .isString()
     .withMessage('Blog ID should be a string')
     .trim()

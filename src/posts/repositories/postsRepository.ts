@@ -3,10 +3,26 @@ import {PostInputDto} from "../dto/post-input.dto";
 import {ObjectId, WithId} from "mongodb";
 import {postsCollection} from "../../db/mongo.db";
 
-//
 export const postsRepository = {
-    async findAll(): Promise<WithId<Post>[]>{
-        return await postsCollection.find().toArray();
+    async findAll(pageSize: number, pageNumber: number): Promise<WithId<Post>[]>{
+        const skip = (pageNumber - 1) * pageSize;
+        const limit = pageSize;
+        return await postsCollection.find().skip(skip).limit(limit).toArray();
+    },
+
+    async findAllForBlog(id: string, skip: number, limit: number, sortBy: string): Promise<{items: WithId<Post>[], totalCount: number}>{
+
+        return {
+            items:
+                await postsCollection
+                .find({blogId: id})
+                .sort({[sortBy]: 'desc'})
+                .skip(skip)
+                .limit(limit)
+                .toArray(),
+            totalCount:
+                await postsCollection.countDocuments({blogId: id})
+        }
     },
 
     async findById(id: string): Promise<WithId<Post> | null>{
