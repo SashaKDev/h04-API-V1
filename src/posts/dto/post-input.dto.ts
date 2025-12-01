@@ -4,3 +4,9 @@ export type PostInputDto = {
     content: string,
     blogId:	string,
 }
+
+export type PostForBlogInputDto = {
+    title: string,
+    shortDescription: string,
+    content: string,
+}
