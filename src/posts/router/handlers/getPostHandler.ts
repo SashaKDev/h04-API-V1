@@ -1,5 +1,4 @@
 import {Request, Response} from 'express';
-import {postsRepository} from "../../repositories/postsRepository";
 import {mapPostToViewModel} from "../../mapers/mapPostToViewModel";
 import {postsService} from "../../application/postsService";
 

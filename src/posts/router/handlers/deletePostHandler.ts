@@ -1,5 +1,4 @@
 import {Request, Response} from 'express';
-import {postsRepository} from "../../repositories/postsRepository";
 import {postsService} from "../../application/postsService";
 
 export const deletePostHandler = async (req: Request, res: Response) => {

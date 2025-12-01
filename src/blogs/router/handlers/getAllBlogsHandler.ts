@@ -1,5 +1,4 @@
 import {Request, Response} from 'express';
-import {mapBlogToViewModel} from "../../mapers/mapBlogToViewModel";
 import {blogsService} from "../../application/blogsService";
 import {mapToBlogsWithPaginator} from "../../mapers/mapToBlogsWithPaginator";
 import {matchedData} from "express-validator";
