@@ -4,19 +4,29 @@ import {ObjectId, WithId} from "mongodb";
 import {postsCollection} from "../../db/mongo.db";
 
 export const postsRepository = {
-    async findAll(pageSize: number, pageNumber: number): Promise<WithId<Post>[]>{
+    async findAll(pageSize: number, pageNumber: number, sortDirection: string, sortBy: string): Promise<{items: WithId<Post>[], totalCount: number}>{
         const skip = (pageNumber - 1) * pageSize;
         const limit = pageSize;
-        return await postsCollection.find().skip(skip).limit(limit).toArray();
+        const sortDirectionNumber = (sortDirection === 'desc') ? -1 : 1;
+        return {
+            items:
+                await postsCollection
+                    .find()
+                    .sort({[sortBy]: sortDirectionNumber})
+                    .skip(skip)
+                    .limit(limit)
+                    .toArray(),
+            totalCount: await postsCollection.countDocuments()
+        };
     },
 
-    async findAllForBlog(id: string, skip: number, limit: number, sortBy: string): Promise<{items: WithId<Post>[], totalCount: number}>{
-
+    async findAllForBlog(id: string, skip: number, limit: number, sortBy: string, sortDirection: string): Promise<{items: WithId<Post>[], totalCount: number}>{
+        const sortDirectionNumber = (sortDirection === 'desc') ? -1 : 1;
         return {
             items:
                 await postsCollection
                 .find({blogId: id})
-                .sort({[sortBy]: 'desc'})
+                .sort({[sortBy]: sortDirectionNumber})
                 .skip(skip)
                 .limit(limit)
                 .toArray(),
