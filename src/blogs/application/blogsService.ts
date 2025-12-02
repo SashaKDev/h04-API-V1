@@ -10,11 +10,12 @@ export const blogsService = {
         const skip = (pageNumber - 1) * pageSize;
         const limit = pageSize
         const foundBlogs = await blogsRepository.findAll(skip, limit, sortBy, sortDirection, searchNameTerm);
+        const pagesCount = Math.ceil(foundBlogs.totalCount / pageSize)
         return {
             ...foundBlogs,
             pageSize: pageSize,
             page: pageNumber,
-            pagesCount: Math.ceil(foundBlogs.totalCount / pageSize)
+            pagesCount: pagesCount,
         }
     },
 
