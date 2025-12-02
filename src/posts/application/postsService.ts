@@ -5,19 +5,27 @@ import {PostInputDto} from "../dto/post-input.dto";
 import {blogsRepository} from "../../blogs/repositories/blogsRepository";
 import {Blog} from "../../blogs/types/blog";
 import {BlogPostsWithPaginator} from "../types/blogPostsWithPaginator";
+import {PostsWithPaginator} from "../types/PostsWithPaginator";
 
 export const postsService = {
 
-    async findAll(pageSize: number, pageNumber: number): Promise<WithId<Post>[]> {
-        return postsRepository.findAll(pageSize, pageNumber);
+    async findAll(pageSize: number, pageNumber: number, sortDirection: string, sortBy: string): Promise<PostsWithPaginator> {
+        const foundPostsWithPaginator = await postsRepository.findAll(pageSize, pageNumber, sortDirection, sortBy)
+        return {
+            items: foundPostsWithPaginator.items,
+            totalCount: foundPostsWithPaginator.totalCount,
+            pageSize: pageSize,
+            page: pageNumber,
+            pagesCount: Math.ceil(foundPostsWithPaginator.totalCount / pageSize),
+        };
     },
 
-    async findAllForBlog(id: string, pageNumber: number, pageSize: number, sortBy: string): Promise<BlogPostsWithPaginator> {
+    async findAllForBlog(id: string, pageNumber: number, pageSize: number, sortBy: string, sortDirection: string): Promise<BlogPostsWithPaginator> {
 
         const skip = (pageNumber - 1) * pageSize;
         const limit = pageSize;
 
-        const posts = await postsRepository.findAllForBlog(id, skip, limit, sortBy);
+        const posts = await postsRepository.findAllForBlog(id, skip, limit, sortBy, sortDirection);
         return {
             ...posts,
             page: pageNumber,
