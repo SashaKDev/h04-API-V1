@@ -7,6 +7,7 @@ import {blogsCollection} from "../../db/mongo.db";
 export const blogsRepository = {
     async findAll(skip: number, limit: number, sortBy: string, sortDirection: string, searchNameTerm: string): Promise<{items: WithId<Blog>[], totalCount: number}>{
         const sortDirectionNumber = sortDirection === 'desc' ? -1 : 1;
+        console.log(sortBy)
         let filter = {};
         if (searchNameTerm) {
             filter = { name: { $regex: searchNameTerm, $options: "i" } }
@@ -15,11 +16,11 @@ export const blogsRepository = {
             items:
                 await blogsCollection
                 .find(filter)
-                .sort({ [sortBy]: sortDirectionNumber })
+                .sort({ [sortBy]:  sortDirectionNumber})
                 .skip(skip)
                 .limit(limit)
                 .toArray(),
-            totalCount: await blogsCollection.countDocuments()
+            totalCount: await blogsCollection.countDocuments(filter)
         }
     },
 
