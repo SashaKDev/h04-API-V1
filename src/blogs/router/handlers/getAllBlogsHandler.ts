@@ -2,7 +2,6 @@ import {Request, Response} from 'express';
 import {blogsService} from "../../application/blogsService";
 import {mapToBlogsWithPaginator} from "../../mapers/mapToBlogsWithPaginator";
 import {matchedData} from "express-validator";
-import {getAllBlogsInputQueryDto} from "../../dto/getAllBlogsInputQueryDto";
 
 export const getAllBlogsHandler = async (req: Request, res: Response) => {
 
