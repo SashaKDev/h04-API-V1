@@ -1,5 +1,3 @@
-
-
 export type getAllBlogsInputQueryDto = {
     pageNumber: number,
     pageSize: number,
