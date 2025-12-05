@@ -1,11 +1,7 @@
-import {ObjectId, WithId} from "mongodb";
 import {Post} from "../types/post";
 import {postsRepository} from "../repositories/postsRepository";
 import {PostInputDto} from "../dto/post-input.dto";
-import {blogsRepository} from "../../blogs/repositories/blogsRepository";
-import {Blog} from "../../blogs/types/blog";
 import {blogsService} from "../../blogs/application/blogsService";
-import {postsCollection} from "../../db/mongo.db";
 
 export const postsService = {
 
