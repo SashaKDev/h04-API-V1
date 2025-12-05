@@ -1,14 +1,13 @@
+import {BlogViewModel} from "../types/blogsViewModel";
+import {BlogsViewModelWithPaginator} from "../types/BlogsViewModelWithPaginator";
 
-import {BlogWithPaginator} from "../types/blogWithPaginator";
-import {mapBlogToViewModel} from "./mapBlogToViewModel";
 
-
-export const mapToBlogsWithPaginator = (blogs: BlogWithPaginator) => {
+export const mapBlogsViewModelToBlogsWithPaginator = (blogs: BlogViewModel[], totalCount: number, pageNumber: number, pageSize: number): BlogsViewModelWithPaginator => {
     return {
-        pagesCount: blogs.pagesCount,
-        page: blogs.page,
-        pageSize: blogs.pageSize,
-        totalCount: blogs.totalCount,
-        items: blogs.items.map(mapBlogToViewModel)
+        pagesCount: Math.ceil(totalCount / pageSize),
+        page: pageNumber,
+        pageSize: pageSize,
+        totalCount: totalCount,
+        items: blogs
     }
 }
