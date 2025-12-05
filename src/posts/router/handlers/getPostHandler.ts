@@ -1,14 +1,13 @@
 import {Request, Response} from 'express';
-import {mapPostToViewModel} from "../../mapers/mapPostToViewModel";
-import {postsService} from "../../application/postsService";
+import {postsQueryRepository} from "../../repositories/postsQueryRepository";
 
 export const getPostHandler = async (req: Request, res: Response) => {
-    const foundPost = await postsService.findById(req.params.id);
-    if (!foundPost) {
+    const foundPostViewModel = await postsQueryRepository.findById(req.params.id);
+    if (!foundPostViewModel) {
         res.sendStatus(404);
         return;
     }
     res
         .status(200)
-        .json(mapPostToViewModel(foundPost));
+        .json(foundPostViewModel);
 }
