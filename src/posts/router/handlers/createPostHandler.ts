@@ -1,8 +1,6 @@
 import {Request, Response} from 'express';
-import {mapPostToViewModel} from "../../mapers/mapPostToViewModel";
 import {PostInputDto} from "../../dto/post-input.dto";
 import {postsService} from "../../application/postsService";
-import {blogsService} from "../../../blogs/application/blogsService";
 import {postsQueryRepository} from "../../repositories/postsQueryRepository";
 
 export const createPostHandler = async (req: Request, res: Response) => {
