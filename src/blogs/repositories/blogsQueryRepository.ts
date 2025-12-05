@@ -1,8 +1,7 @@
 import {blogsCollection} from "../../db/mongo.db";
 import {mapBlogsViewModelToBlogsWithPaginator} from "../mapers/mapToBlogsWithPaginator";
 import {BlogsViewModelWithPaginator} from "../types/BlogsViewModelWithPaginator";
-import {Blog} from "../types/blog";
-import {ObjectId, WithId} from "mongodb";
+import {ObjectId} from "mongodb";
 import {BlogViewModel} from "../types/blogsViewModel";
 import {mapBlogToViewModel} from "../mapers/mapBlogToViewModel";
 
